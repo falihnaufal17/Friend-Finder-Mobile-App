@@ -39,11 +39,8 @@ const styles = StyleSheet.create({
     borderWidth: 0
   },
   image: {
-    top: 0,
-    left: -393.59,
-    width: 753.59,
-    height: 640,
-    position: "absolute",
+    width: '100%',
+    height: '100%',
     opacity: 0.8
   },
   materialButtonShare: {

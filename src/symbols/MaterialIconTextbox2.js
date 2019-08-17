@@ -2,16 +2,20 @@ import React, { Component } from "react";
 import { StyleSheet, View, TextInput } from "react-native";
 import Icon from "@builderx/icons";
 
-export default class MaterialIconTextbox10 extends Component {
+export default class MaterialIconTextbox2 extends Component {
   render() {
     return (
       <View style={[styles.root, this.props.style]}>
         <Icon
-          name={"email"}
+          name={"account"}
           type={"MaterialCommunityIcons"}
           style={styles.iconStyle}
         />
-        <TextInput placeholder={"Email"} style={styles.inputStyle} textContentType='emailAddress' keyboardType={'email-address'} />
+        <TextInput
+          placeholder={"Fullname"}
+          placeholderTextColor={"rgba(74,74,74,1)"}
+          style={styles.inputStyle}
+        />
       </View>
     );
   }
@@ -20,18 +24,19 @@ export default class MaterialIconTextbox10 extends Component {
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: "transparent",
+    backgroundColor: "rgba(230,230,230,1)",
     flexDirection: "row",
     alignItems: "center"
   },
   iconStyle: {
-    color: "#616161",
+    color: "rgba(74,74,74,1)",
     fontFamily: "roboto-regular",
     fontSize: 24,
     paddingLeft: 8
   },
   inputStyle: {
     flex: 1,
+    backgroundColor: "rgba(230, 230, 230,1)",
     color: "#000",
     alignSelf: "stretch",
     marginLeft: 16,
@@ -39,6 +44,7 @@ const styles = StyleSheet.create({
     paddingRight: 5,
     paddingBottom: 8,
     borderColor: "#D9D5DC",
+    borderBottomWidth: 1,
     fontSize: 16,
     fontFamily: "roboto-regular",
     lineHeight: 16

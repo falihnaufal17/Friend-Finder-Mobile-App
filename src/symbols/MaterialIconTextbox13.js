@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { StyleSheet, View, TextInput } from "react-native";
 import Icon from "@builderx/icons";
 
-export default class MaterialIconTextbox10 extends Component {
+export default class MaterialIconTextbox13 extends Component {
   render() {
     return (
       <View style={[styles.root, this.props.style]}>
@@ -11,7 +11,7 @@ export default class MaterialIconTextbox10 extends Component {
           type={"MaterialCommunityIcons"}
           style={styles.iconStyle}
         />
-        <TextInput placeholder={"Email"} style={styles.inputStyle} textContentType='emailAddress' keyboardType={'email-address'} />
+        <TextInput placeholder={"Email"} style={styles.inputStyle} />
       </View>
     );
   }
@@ -39,6 +39,7 @@ const styles = StyleSheet.create({
     paddingRight: 5,
     paddingBottom: 8,
     borderColor: "#D9D5DC",
+    borderBottomWidth: 1,
     fontSize: 16,
     fontFamily: "roboto-regular",
     lineHeight: 16
