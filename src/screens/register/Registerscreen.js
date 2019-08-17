@@ -1,18 +1,18 @@
 import React, { Component } from "react";
 import { StyleSheet, View, Image, StatusBar, Text } from "react-native";
 import { Center } from "@builderx/utils";
-import MaterialButtonShare8 from "../symbols/MaterialButtonShare8";
-import MaterialIconTextbox12 from "../symbols/MaterialIconTextbox12";
-import MaterialIconTextbox13 from "../symbols/MaterialIconTextbox13";
-import MaterialIconTextbox14 from "../symbols/MaterialIconTextbox14";
+import MaterialButtonShare8 from "../../symbols/MaterialButtonShare8";
+import MaterialIconTextbox12 from "../../symbols/MaterialIconTextbox12";
+import MaterialIconTextbox13 from "../../symbols/MaterialIconTextbox13";
+import MaterialIconTextbox14 from "../../symbols/MaterialIconTextbox14";
 
 export default class Registerscreen extends Component {
   render() {
     return (
       <View style={styles.root}>
         <Image
-          source={require("../assets/images/1800x1200_diabetes_what_friends_should_know_slideshow9.jpg")}
-          resizeMode={"cover"}
+          source={require("../../assets/images/1800x1200_diabetes_what_friends_should_know_slideshow9.jpg")}
+          resizeMode={'cover'}
           style={styles.image}
         />
         <StatusBar hidden={true} style={styles.statusBar} />
@@ -36,12 +36,9 @@ const styles = StyleSheet.create({
     opacity: 0.8
   },
   image: {
-    top: 0,
-    left: 0,
+    width: '100%',
+    height: '100%',
     backgroundColor: "rgba(230, 230, 230,1)",
-    position: "absolute",
-    right: 0,
-    bottom: 0,
     opacity: 0.8
   },
   statusBar: {},

@@ -11,7 +11,7 @@ export default class MaterialIconTextbox14 extends Component {
           type={"MaterialCommunityIcons"}
           style={styles.iconStyle}
         />
-        <TextInput placeholder={"Password"} style={styles.inputStyle} />
+        <TextInput placeholder={"Password"} style={styles.inputStyle} textContentType={'password'} secureTextEntry={true} />
       </View>
     );
   }
@@ -20,7 +20,6 @@ export default class MaterialIconTextbox14 extends Component {
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: "transparent",
     flexDirection: "row",
     alignItems: "center"
   },
@@ -39,7 +38,6 @@ const styles = StyleSheet.create({
     paddingRight: 5,
     paddingBottom: 8,
     borderColor: "#D9D5DC",
-    borderBottomWidth: 1,
     fontSize: 16,
     fontFamily: "roboto-regular",
     lineHeight: 16
