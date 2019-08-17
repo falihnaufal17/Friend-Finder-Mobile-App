@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     paddingRight: 5
   },
   inputStyle: {
-    height: 32,
+    height: 40,
     flex: 1,
     color: "#000",
     alignSelf: "flex-start",

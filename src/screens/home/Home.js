@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { StyleSheet, View } from "react-native";
-import MaterialMapView3 from "../symbols/MaterialMapView3";
+import MaterialMapView3 from "../../symbols/MaterialMapView3";
 import { Center } from "@builderx/utils";
-import CupertinoSearchBarBasic4 from "../symbols/CupertinoSearchBarBasic4";
-import MaterialButtonShare7 from "../symbols/MaterialButtonShare7";
+import CupertinoSearchBarBasic4 from "../../symbols/CupertinoSearchBarBasic4";
+import MaterialButtonShare7 from "../../symbols/MaterialButtonShare7";
 
 export default class Home extends Component {
   render() {
@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
   cupertinoSearchBarBasic4: {
     top: 25.3,
     width: 330.57,
-    height: 44,
+    height: 60,
     position: "absolute",
     borderRadius: 100,
     shadowColor: "rgba(0,0,0,1)",
