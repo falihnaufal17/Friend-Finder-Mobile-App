@@ -12,6 +12,7 @@
     "@builderx/react-native-swiper": "^0.1.5",
     "@builderx/tab-view": "^0.1.5",
     "@builderx/utils": "^0.1.6",
+    "native-base": "^2.13.5",
     "react": "16.8.6",
     "react-native": "0.60.5",
     "react-native-maps": "^0.25.0",
