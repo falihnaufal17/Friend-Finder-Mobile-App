@@ -7,6 +7,7 @@ import UserList from '../../screens/userlist/UserList'
 import ChatList from '../../screens/chatlist/chatlist';
 import Chat from '../../screens/chat/chat'
 import Profile from '../../screens/profiles/profile';
+import ProfileFriend from '../../screens/profiles/profileFriend'
 
 const StackNavigator = createStackNavigator({
     Home: {
@@ -50,9 +51,15 @@ const StackNavigator = createStackNavigator({
         navigationOptions: {
             header: null
         }
+    },
+    ProfileFriend: {
+        screen: ProfileFriend,
+        navigationOptions: {
+            header: null
+        }
     }
 }, {
-        initialRouteName: 'Profile'
+        initialRouteName: 'ProfileFriend'
     })
 
 const DrawerNavigator = createDrawerNavigator({
