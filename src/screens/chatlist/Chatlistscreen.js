@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { StyleSheet, View } from "react-native";
-import MaterialHeader14 from "../symbols/MaterialHeader14";
-import MaterialList121 from "../symbols/MaterialList121";
+import MaterialHeader14 from "../../symbols/MaterialHeader14";
+import MaterialList121 from "../../symbols/MaterialList121";
 
 export default class Chatlistscreen extends Component {
   render() {

@@ -13,10 +13,9 @@ export default class MaterialList121 extends Component {
                 style={styles.avatarImageStyle}
               />
               <View style={styles.contentColor}>
-                <Text style={styles.rowTitle}>Two-line Item</Text>
+                <Text style={styles.rowTitle}>Falih Kun</Text>
                 <Text style={styles.rowSubTitle}>
-                  BuilderX is a screen design tool which codes React Native for
-                  you.
+                  Whatsup dude!
                 </Text>
               </View>
             </View>
