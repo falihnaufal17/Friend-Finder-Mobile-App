@@ -5,6 +5,7 @@ import Login from '../../screens/login/Login'
 import Register from '../../screens/register/Register'
 import UserList from '../../screens/userlist/UserList'
 import ChatList from '../../screens/chatlist/chatlist';
+import Chat from '../../screens/chat/chat'
 
 const StackNavigator = createStackNavigator({
     Home: {
@@ -36,9 +37,15 @@ const StackNavigator = createStackNavigator({
         navigationOptions: {
             header: null
         }
+    },
+    Chat: {
+        screen: Chat,
+        navigationOptions: {
+            header: null
+        }
     }
 }, {
-        initialRouteName: 'ChatList'
+        initialRouteName: 'Chat'
     })
 
 const DrawerNavigator = createDrawerNavigator({
