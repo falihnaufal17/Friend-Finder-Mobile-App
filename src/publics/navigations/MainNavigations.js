@@ -6,6 +6,7 @@ import Register from '../../screens/register/Register'
 import UserList from '../../screens/userlist/UserList'
 import ChatList from '../../screens/chatlist/chatlist';
 import Chat from '../../screens/chat/chat'
+import Profile from '../../screens/profiles/profile';
 
 const StackNavigator = createStackNavigator({
     Home: {
@@ -43,9 +44,15 @@ const StackNavigator = createStackNavigator({
         navigationOptions: {
             header: null
         }
+    },
+    Profile: {
+        screen: Profile,
+        navigationOptions: {
+            header: null
+        }
     }
 }, {
-        initialRouteName: 'Chat'
+        initialRouteName: 'Profile'
     })
 
 const DrawerNavigator = createDrawerNavigator({
