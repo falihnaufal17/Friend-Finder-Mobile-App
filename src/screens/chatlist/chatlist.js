@@ -20,6 +20,7 @@ export class chatlist extends Component {
                 <List>
                     <TouchableOpacity
                         activeOpacity={0.7}
+                        onPress={() => this.props.navigation.navigate('Chat')}
                     >
                         <ListItem avatar>
                             <Left>
@@ -69,8 +70,9 @@ export class chatlist extends Component {
                 </List>
                 <Fab
                     position="bottomRight"
+                    onPress={() => this.props.navigation.navigate('UserList')}
                 >
-                    <Icon name="comment" type="FontAwesome" style={{ fontSize: 25 }} />
+                    <Icon name="people" type="Ionicons" style={{ fontSize: 25 }} />
                 </Fab>
             </>
         )

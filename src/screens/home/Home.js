@@ -31,6 +31,13 @@ export default class Home extends Component {
                             description="hey i'm here!"
                         />
                     </MapView>
+
+                    <Fab
+                        position="bottomRight"
+                        onPress={() => this.props.navigation.navigate('ChatList')}
+                    >
+                        <Icon name="people" type="Ionicons" />
+                    </Fab>
                 </View>
             </>
         )

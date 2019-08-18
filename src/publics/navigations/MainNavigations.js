@@ -59,7 +59,7 @@ const StackNavigator = createStackNavigator({
         }
     }
 }, {
-        initialRouteName: 'ProfileFriend'
+        initialRouteName: 'Login'
     })
 
 const DrawerNavigator = createDrawerNavigator({

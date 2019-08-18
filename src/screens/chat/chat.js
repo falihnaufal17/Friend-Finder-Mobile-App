@@ -43,7 +43,7 @@ export class Chat extends Component {
                     <Left>
                         <Button
                             transparent
-                            onPress={() => alert('pencetan')}
+                            onPress={() => this.props.navigation.navigate('ChatList')}
                         >
                             <Icon name="arrow-round-back" type="Ionicons" style={styles.iconStyle} />
                         </Button>

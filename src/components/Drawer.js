@@ -16,28 +16,36 @@ export class Drawer extends Component {
                     <Text style={styles.txtEmail}>falihnaufal1700@gmail.com</Text>
                 </View>
                 <List>
-                    <TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() => this.props.navigation.navigate('Home')}
+                    >
                         <ListItem>
                             <Left>
                                 <Text style={styles.txtMenu}><Icon name="map" type="Ionicons" style={styles.iconStyle} /> Map</Text>
                             </Left>
                         </ListItem>
                     </TouchableOpacity>
-                    <TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() => this.props.navigation.navigate('Profile')}
+                    >
                         <ListItem>
                             <Left>
                                 <Text style={styles.txtMenu}><Icon name="person" type="Ionicons" style={styles.iconStyle} /> Profile</Text>
                             </Left>
                         </ListItem>
                     </TouchableOpacity>
-                    <TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() => this.props.navigation.navigate('UserList')}
+                    >
                         <ListItem>
                             <Left>
                                 <Text style={styles.txtMenu}><Icon name="people" type="Ionicons" style={styles.iconStyle} /> Friend List</Text>
                             </Left>
                         </ListItem>
                     </TouchableOpacity>
-                    <TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() => this.props.navigation.navigate('Login')}
+                    >
                         <ListItem>
                             <Left>
                                 <Text style={styles.txtMenu}><Icon name="exit" type="Ionicons" style={[styles.iconStyle, { color: 'red' }]} /> Logout</Text>

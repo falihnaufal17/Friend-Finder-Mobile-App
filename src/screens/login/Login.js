@@ -6,7 +6,7 @@ export default class Login extends Component {
     render() {
         return (
             <View style={styles.root}>
-                <StatusBar hidden translucent={true} />
+                <StatusBar translucent={true} backgroundColor="transparent" />
                 <Image style={styles.imgBackground} source={require('../../assets/images/94545326-cheerful-friends-taking-selfie-on-a-holiday-group-of-men-and-women-sitting-outdoors-on-a-summer-day-.jpg')} resizeMode='cover' />
                 <Text style={styles.title}> SIGN IN </Text>
                 <Item rounded style={styles.formInput}>
@@ -22,7 +22,7 @@ export default class Login extends Component {
                     <Text style={styles.txtSignUp}>SIGN UP</Text>
                 </TouchableOpacity>
 
-                <Button rounded dark onPress={() => alert('pencetan')} style={styles.btnSignIn}>
+                <Button rounded dark onPress={() => this.props.navigation.navigate('Home')} style={styles.btnSignIn}>
                     <Icon name="arrow-right" type="FontAwesome" />
                 </Button>
 

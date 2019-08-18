@@ -21,7 +21,7 @@ class UserList extends Component {
                         <Title>Friend Finder</Title>
                     </Body>
                     <Right>
-                        <Button transparent rounded>
+                        <Button transparent rounded onPress={() => this.props.navigation.navigate('ChatList')}>
                             <Icon name="ios-chatbubbles" type="Ionicons" />
                         </Button>
                     </Right>
@@ -36,7 +36,9 @@ class UserList extends Component {
                             <Text note>Hi there i'm using friend finder!</Text>
                         </Body>
                         <Right>
-                            <TouchableOpacity>
+                            <TouchableOpacity
+                                onPress={() => this.props.navigation.navigate('Chat')}
+                            >
                                 <Icon name="comment" type="FontAwesome" style={{ fontSize: 25 }} />
                             </TouchableOpacity>
                         </Right>
