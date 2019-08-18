@@ -21,13 +21,6 @@ export default class MaterialHeader2 extends Component {
         <View style={styles.rightIconsWrapper}>
           <TouchableOpacity style={styles.iconButton}>
             <Icon
-              name={"magnify"}
-              type={"MaterialCommunityIcons"}
-              style={styles.rightIcon1}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.iconButton}>
-            <Icon
               name={"ios-chatbubbles"}
               type={"Ionicons"}
               style={styles.rightIcon2}

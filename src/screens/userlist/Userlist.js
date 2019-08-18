@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { StyleSheet, View } from "react-native";
-import MaterialHeader2 from "../symbols/MaterialHeader2";
-import MaterialList9 from "../symbols/MaterialList9";
+import MaterialHeader2 from "../../symbols/MaterialHeader2";
+import MaterialList9 from "../../symbols/MaterialList9";
 
 export default class Userlist extends Component {
   render() {
