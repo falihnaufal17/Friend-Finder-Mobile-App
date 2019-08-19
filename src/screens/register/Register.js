@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { StatusBar, Text, View, StyleSheet, Image, TouchableOpacity } from 'react-native'
 import { Item, Input, Icon, Button } from 'native-base'
 import { Database, Auth } from '../../publics/configs/db'
+import GetLocation from 'react-native-get-location'
 
 export default class Register extends Component {
     constructor(props) {
@@ -10,8 +11,41 @@ export default class Register extends Component {
         this.state = {
             fullname: '',
             email: '',
-            password: ''
+            password: '',
+            latitude: null,
+            longitude: null,
         }
+    }
+
+    componentDidMount = async () => {
+        await this.getCurrentPosition()
+    }
+
+    getCurrentPosition() {
+        GetLocation.getCurrentPosition({
+            enableHighAccuracy: true,
+            timeout: 15000,
+        })
+            .then(location => {
+                console.warn(location.latitude);
+
+                let region = {
+                    latitude: location.latitude,
+                    longitude: location.longitude,
+                    latitudeDelta: 0.00922 * 1.5,
+                    longitudeDelta: 0.00421 * 1.5
+                }
+
+                this.setState({
+                    mapRegion: region,
+                    latitude: location.latitude,
+                    longitude: location.longitude
+                })
+            })
+            .catch(error => {
+                const { code, message } = error;
+                console.warn(code, message);
+            })
     }
 
     _handleRegister = () => {
@@ -20,12 +54,14 @@ export default class Register extends Component {
         } else {
             Auth.createUserWithEmailAndPassword(this.state.email, this.state.password)
                 .then((response) => {
-                    console.log(response)
+                    console.warn(response)
                     Database.ref('/user/' + response.user.uid).set({
                         fullname: this.state.fullname,
                         status: 'offline',
                         email: this.state.email,
-                        avatar: 'https://res.cloudinary.com/dnqtceffv/image/upload/v1566043986/srhwjzljnfq79cg2glov.png'
+                        avatar: 'https://res.cloudinary.com/dnqtceffv/image/upload/v1566043986/srhwjzljnfq79cg2glov.png',
+                        latitude: this.state.latitude,
+                        longitude: this.state.longitude
                     })
                     this.props.navigation.navigate('Login')
                 })

@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-import { Text, View, StyleSheet, StatusBar, AsyncStorage as storage } from 'react-native'
+import { Text, View, StyleSheet, StatusBar, AsyncStorage as storage, Image } from 'react-native'
 import { Fab, Icon } from 'native-base'
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps'
 import GetLocation from 'react-native-get-location'
+import { Database } from '../../publics/configs/db'
 
 export default class Home extends Component {
     constructor(props) {
@@ -10,9 +11,10 @@ export default class Home extends Component {
         this.state = {
             mapRegion: null,
             latitude: 0,
-            longitude: 0
+            longitude: 0,
+            users: []
         }
-
+        this.user()
 
     }
     componentDidMount = async () => {
@@ -46,10 +48,22 @@ export default class Home extends Component {
             })
     }
 
+    user = async () => {
+        Database.ref('/user').once('value', (result) => {
+            let data = result.val();
+            if (data !== null) {
+                let users = Object.values(data);
+                this.setState({
+                    users: users
+                })
+            }
+        });
+    }
+
     render() {
         console.warn("longitude", this.state.longitude)
         console.warn("latitude", this.state.latitude)
-        console.warn("data", storage.getItem('userdata'))
+        console.warn("data", this.state.users)
         return (
             <>
                 <StatusBar translucent={true} backgroundColor="transparent" barStyle="dark-content" />
@@ -67,15 +81,26 @@ export default class Home extends Component {
                         style={styles.map}
                         region={this.state.mapRegion}
                     >
-                        <Marker
-                            draggable
-                            coordinate={{
-                                latitude: this.state.latitude,
-                                longitude: this.state.longitude,
-                            }}
-                            title="fullname"
-                            description="hey i'm here!"
-                        />
+                        {
+                            this.state.users.map((item) => {
+                                return (
+                                    <Marker
+                                        draggable
+                                        coordinate={{
+                                            latitude: item.latitude,
+                                            longitude: item.longitude,
+                                        }}
+                                        title={item.fullname}
+                                        description={`${item.latitude} / ${item.longitude}`}
+                                    >
+                                        <Image
+                                            source={{ uri: item.avatar }}
+                                            style={{ width: 40, height: 40, borderRadius: 100 / 2 }}
+                                        />
+                                    </Marker>
+                                )
+                            })
+                        }
                     </MapView>
 
                     <Fab
