@@ -18,7 +18,7 @@ export default class Login extends Component {
                     <Input placeholder="Password" placeholderTextColor="white" secureTextEntry={true} style={styles.textInput} />
                 </Item>
 
-                <TouchableOpacity style={styles.btnSignUp}>
+                <TouchableOpacity style={styles.btnSignUp} onPress={() => this.props.navigation.navigate('Register')}>
                     <Text style={styles.txtSignUp}>SIGN UP</Text>
                 </TouchableOpacity>
 

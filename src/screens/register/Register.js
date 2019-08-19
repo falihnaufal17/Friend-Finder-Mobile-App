@@ -1,8 +1,47 @@
 import React, { Component } from 'react'
 import { StatusBar, Text, View, StyleSheet, Image, TouchableOpacity } from 'react-native'
 import { Item, Input, Icon, Button } from 'native-base'
+import { Database, Auth } from '../../publics/configs/db'
 
 export default class Register extends Component {
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            fullname: '',
+            email: '',
+            password: ''
+        }
+    }
+
+    _handleRegister = () => {
+        if (this.state.fullname === '' || this.state.email === '' || this.state.password === '') {
+            alert('Oops isi data yang kosong beb!')
+        } else {
+            Auth.createUserWithEmailAndPassword(this.state.email, this.state.password)
+                .then((response) => {
+                    console.log(response)
+                    Database.ref('/user/' + response.user.uid).set({
+                        fullname: this.state.fullname,
+                        status: 'offline',
+                        email: this.state.email,
+                        avatar: 'https://res.cloudinary.com/dnqtceffv/image/upload/v1566043986/srhwjzljnfq79cg2glov.png'
+                    })
+                    this.props.navigation.navigate('Login')
+                })
+                .catch(error => {
+                    alert(error.message)
+                    this.setState({
+                        fullname: '',
+                        email: '',
+                        password: ''
+                    })
+
+                    this.props.navigation.navigate('Register')
+                })
+        }
+    }
+
     render() {
         return (
             <View style={styles.root}>
@@ -11,22 +50,22 @@ export default class Register extends Component {
                 <Text style={styles.title}> SIGN UP </Text>
                 <Item rounded style={styles.formInput}>
                     <Icon name="user" type="FontAwesome" style={styles.icon} />
-                    <Input placeholder="Fullname" placeholderTextColor="white" style={styles.textInput} />
+                    <Input placeholder="Fullname" placeholderTextColor="white" onChangeText={fullname => this.setState({ fullname })} style={styles.textInput} />
                 </Item>
                 <Item rounded style={styles.formInput}>
                     <Icon name="envelope" type="FontAwesome" style={styles.icon} />
-                    <Input placeholder="Email" placeholderTextColor="white" style={styles.textInput} />
+                    <Input placeholder="Email" placeholderTextColor="white" onChangeText={email => this.setState({ email })} style={styles.textInput} />
                 </Item>
                 <Item rounded style={styles.formInput}>
                     <Icon name="key" type="FontAwesome" style={styles.icon} />
-                    <Input placeholder="Password" placeholderTextColor="white" secureTextEntry={true} style={styles.textInput} />
+                    <Input placeholder="Password" placeholderTextColor="white" secureTextEntry={true} onChangeText={password => this.setState({ password })} style={styles.textInput} />
                 </Item>
 
                 <TouchableOpacity style={styles.btnSignUp}>
                     <Text style={styles.txtSignUp}>SIGN IN</Text>
                 </TouchableOpacity>
 
-                <Button rounded dark onPress={() => alert('pencetan')} style={styles.btnSignIn}>
+                <Button rounded dark onPress={() => this._handleRegister()} style={styles.btnSignIn}>
                     <Icon name="arrow-right" type="FontAwesome" />
                 </Button>
             </View>
