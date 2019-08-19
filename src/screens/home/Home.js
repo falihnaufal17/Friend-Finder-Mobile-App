@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, StyleSheet, StatusBar } from 'react-native'
+import { Text, View, StyleSheet, StatusBar, AsyncStorage as storage } from 'react-native'
 import { Fab, Icon } from 'native-base'
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps'
 import GetLocation from 'react-native-get-location'
@@ -49,6 +49,7 @@ export default class Home extends Component {
     render() {
         console.warn("longitude", this.state.longitude)
         console.warn("latitude", this.state.latitude)
+        console.warn("data", storage.getItem('userdata'))
         return (
             <>
                 <StatusBar translucent={true} backgroundColor="transparent" barStyle="dark-content" />

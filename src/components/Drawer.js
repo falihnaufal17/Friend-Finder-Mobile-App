@@ -1,9 +1,20 @@
 import React, { Component } from 'react'
-import { Text, View, StyleSheet, Image } from 'react-native'
+import { Text, View, StyleSheet, Image, AsyncStorage } from 'react-native'
 import { List, ListItem, Left, Icon, Body, Right } from 'native-base';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
+import { Database, Auth } from '../publics/configs/db'
+
 export class Drawer extends Component {
+    _handleLogout = async () => {
+        const userToken = await AsyncStorage.getItem('userid');
+        console.log(userToken)
+        Database.ref('/user/' + userToken).update({ status: "offline" })
+        Auth.signOut().then(() => {
+            AsyncStorage.clear();
+            this.props.navigation.navigate('Login');
+        }).catch(error => { alert(error.message) })
+    }
     render() {
         return (
             <View style={styles.container}>
@@ -44,7 +55,7 @@ export class Drawer extends Component {
                         </ListItem>
                     </TouchableOpacity>
                     <TouchableOpacity
-                        onPress={() => this.props.navigation.navigate('Login')}
+                        onPress={() => this._handleLogout()}
                     >
                         <ListItem>
                             <Left>

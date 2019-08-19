@@ -16,7 +16,7 @@ export default class Register extends Component {
 
     _handleRegister = () => {
         if (this.state.fullname === '' || this.state.email === '' || this.state.password === '') {
-            alert('Oops isi data yang kosong beb!')
+            alert('Oops form ada yang kosong isi dengan lengkap yah')
         } else {
             Auth.createUserWithEmailAndPassword(this.state.email, this.state.password)
                 .then((response) => {

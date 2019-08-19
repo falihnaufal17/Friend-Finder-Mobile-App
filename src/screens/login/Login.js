@@ -1,8 +1,51 @@
 import React, { Component } from 'react'
-import { StatusBar, Text, View, StyleSheet, Image, TouchableOpacity } from 'react-native'
+import { StatusBar, Text, View, StyleSheet, Image, TouchableOpacity, AsyncStorage as storage } from 'react-native'
 import { Item, Input, Icon, Button } from 'native-base'
+import { Database, Auth } from '../../publics/configs/db'
 
 export default class Login extends Component {
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            users: [],
+            email: '',
+            password: ''
+        }
+    }
+
+    _handleLogin = async () => {
+        const { email, password } = this.state
+        if (email === '' || password === '') {
+            alert('Oops form ada yang kosong isi dengan lengkap yah')
+        } else {
+            Database.ref('/user').orderByChild('email').equalTo(email).once('value', (result) => {
+                let data = result.val()
+                console.warn("datanya: ", data)
+
+                if (data !== null) {
+                    let users = Object.values(data)
+
+                    storage.setItem('userdata', users[0].email)
+                }
+            })
+
+            await Auth.signInWithEmailAndPassword(email, password)
+                .then((response) => {
+                    Database.ref('/user/' + response.user.uid).update({ status: 'online' })
+                    storage.setItem('userid', response.user.uid)
+                    this.props.navigation.navigate('Home')
+                })
+                .catch(error => {
+                    alert(error.message)
+                    this.setState({
+                        email: '',
+                        password: ''
+                    })
+                })
+        }
+    }
+
     render() {
         return (
             <View style={styles.root}>
@@ -11,18 +54,18 @@ export default class Login extends Component {
                 <Text style={styles.title}> SIGN IN </Text>
                 <Item rounded style={styles.formInput}>
                     <Icon name="envelope" type="FontAwesome" style={styles.icon} />
-                    <Input placeholder="Email" placeholderTextColor="white" style={styles.textInput} />
+                    <Input placeholder="Email" placeholderTextColor="white" style={styles.textInput} onChangeText={email => this.setState({ email })} />
                 </Item>
                 <Item rounded style={styles.formInput}>
                     <Icon name="key" type="FontAwesome" style={styles.icon} />
-                    <Input placeholder="Password" placeholderTextColor="white" secureTextEntry={true} style={styles.textInput} />
+                    <Input placeholder="Password" placeholderTextColor="white" secureTextEntry={true} style={styles.textInput} onChangeText={password => this.setState({ password })} />
                 </Item>
 
                 <TouchableOpacity style={styles.btnSignUp} onPress={() => this.props.navigation.navigate('Register')}>
                     <Text style={styles.txtSignUp}>SIGN UP</Text>
                 </TouchableOpacity>
 
-                <Button rounded dark onPress={() => this.props.navigation.navigate('Home')} style={styles.btnSignIn}>
+                <Button rounded dark onPress={() => this._handleLogin()} style={styles.btnSignIn}>
                     <Icon name="arrow-right" type="FontAwesome" />
                 </Button>
 
