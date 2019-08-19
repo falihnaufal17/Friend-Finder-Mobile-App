@@ -15,7 +15,11 @@ export default class Home extends Component {
 
 
     }
-    componentDidMount = () => {
+    componentDidMount = async () => {
+        await this.getCurrentPosition()
+    }
+
+    getCurrentPosition() {
         GetLocation.getCurrentPosition({
             enableHighAccuracy: true,
             timeout: 15000,
@@ -72,6 +76,14 @@ export default class Home extends Component {
                         onPress={() => this.props.navigation.navigate('ChatList')}
                     >
                         <Icon name="people" type="Ionicons" />
+                    </Fab>
+                    <Fab
+                        position="bottomRight"
+                        onPress={() => this.getCurrentPosition()}
+                        style={{ marginVertical: 80, backgroundColor: 'white' }}
+
+                    >
+                        <Icon name="locate" type="Ionicons" style={{ color: 'steelblue' }} />
                     </Fab>
                 </View>
             </>
