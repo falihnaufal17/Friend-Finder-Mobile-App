@@ -8,6 +8,23 @@ import ChatList from '../../screens/chatlist/chatlist';
 import Chat from '../../screens/chat/chat'
 import Profile from '../../screens/profiles/profile';
 import ProfileFriend from '../../screens/profiles/profileFriend'
+import AuthLoading from '../../components/AuthLoading'
+
+const AuthStack = createStackNavigator({
+    Login: {
+        screen: Login,
+        navigationOptions: {
+            header: null
+        }
+    },
+
+    Register: {
+        screen: Register,
+        navigationOptions: {
+            header: null
+        }
+    },
+})
 
 const StackNavigator = createStackNavigator({
     Home: {
@@ -16,18 +33,7 @@ const StackNavigator = createStackNavigator({
             header: null
         }
     },
-    Login: {
-        screen: Login,
-        navigationOptions: {
-            header: null
-        }
-    },
-    Register: {
-        screen: Register,
-        navigationOptions: {
-            header: null
-        }
-    },
+
     UserList: {
         screen: UserList,
         navigationOptions: {
@@ -58,9 +64,7 @@ const StackNavigator = createStackNavigator({
             header: null
         }
     }
-}, {
-        initialRouteName: 'Login'
-    })
+})
 
 const DrawerNavigator = createDrawerNavigator({
     StackNavigator,
@@ -74,4 +78,10 @@ const DrawerNavigator = createDrawerNavigator({
         }
     })
 
-export default createAppContainer(DrawerNavigator)
+export default createAppContainer(createSwitchNavigator(
+    {
+        AuthLoading: AuthLoading,
+        App: DrawerNavigator,
+        Auth: AuthStack
+    }
+))

@@ -34,7 +34,7 @@ export default class Login extends Component {
                 .then((response) => {
                     Database.ref('/user/' + response.user.uid).update({ status: 'online' })
                     storage.setItem('userid', response.user.uid)
-                    this.props.navigation.navigate('Home')
+                    this.props.navigation.navigate('AuthLoading')
                 })
                 .catch(error => {
                     alert(error.message)
