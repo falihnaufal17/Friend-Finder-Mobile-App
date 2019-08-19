@@ -57,6 +57,12 @@ export default class Home extends Component {
                         provider={PROVIDER_GOOGLE}
                         showsMyLocationButton={true}
                         showsIndoorLevelPicker={true}
+                        showsUserLocation={true}
+                        zoomControlEnabled={true}
+                        showsCompass={true}
+                        showsTraffic={true}
+                        showsBuildings={true}
+                        showsScale={true}
                         style={styles.map}
                         region={this.state.mapRegion}
                     >

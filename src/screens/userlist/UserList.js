@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
-import { Text, View } from 'react-native'
-import { Header, Left, Button, Right, Icon, Body, Title, List, ListItem, Thumbnail } from 'native-base';
-import { withNavigation } from 'react-navigation'
+import { StatusBar } from 'react-native'
+import { Text, Header, Left, Button, Right, Icon, Body, Title, List, ListItem, Thumbnail, Subtitle } from 'native-base';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 class UserList extends Component {
@@ -11,6 +10,7 @@ class UserList extends Component {
     render() {
         return (
             <>
+                <StatusBar translucent={false} backgroundColor="transparent" />
                 <Header>
                     <Left>
                         <Button transparent rounded onPress={() => this.props.navigation.openDrawer()}>
@@ -19,6 +19,7 @@ class UserList extends Component {
                     </Left>
                     <Body>
                         <Title>Friend Finder</Title>
+                        <Subtitle>Friend List</Subtitle>
                     </Body>
                     <Right>
                         <Button transparent rounded onPress={() => this.props.navigation.navigate('ChatList')}>
@@ -32,16 +33,9 @@ class UserList extends Component {
                             <Thumbnail source={{ uri: 'https://res.cloudinary.com/dnqtceffv/image/upload/v1565841345/w4erugmcy0csw2cvjmx7.jpg' }} />
                         </Left>
                         <Body>
-                            <Text>Person</Text>
+                            <Text>Nathalia Gabryel</Text>
                             <Text note>Hi there i'm using friend finder!</Text>
                         </Body>
-                        <Right>
-                            <TouchableOpacity
-                                onPress={() => this.props.navigation.navigate('Chat')}
-                            >
-                                <Icon name="comment" type="FontAwesome" style={{ fontSize: 25 }} />
-                            </TouchableOpacity>
-                        </Right>
                     </ListItem>
                 </List>
             </>
