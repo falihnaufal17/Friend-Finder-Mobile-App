@@ -1,31 +1,35 @@
 import React, { Component } from 'react'
-import { FlatList } from 'react-native'
+import { FlatList, AsyncStorage as storage } from 'react-native'
 import { Text, Left, Body, List, ListItem, Thumbnail } from 'native-base';
 import { Database } from '../publics/configs/db'
+import firebase from 'firebase'
 
 export class UserList extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            users: []
+            users: [],
+            data: []
         }
-        this.user()
     }
 
-    componentDidMount = async () => {
-        await this.user()
-    }
-
-    user = () => {
-        Database.ref('/user').once('value', (result) => {
-            let data = result.val();
-            if (data !== null) {
-                let users = Object.values(data);
-                this.setState({
-                    users: users
+    componentWillMount = async () => {
+        let dbref = Database.ref('/user')
+        let email = await storage.getItem('email')
+        dbref.on('child_added', (val) => {
+            let person = val.val()
+            console.warn("person", person.email.toLowerCase())
+            console.warn("email", email)
+            if (person.email.toLowerCase() === email) {
+                email = person.email.toLowerCase()
+            } else {
+                this.setState((prevState) => {
+                    return {
+                        users: [...prevState.users, person]
+                    }
                 })
             }
-        });
+        })
     }
 
     _renderItem = ({ item }) => {
