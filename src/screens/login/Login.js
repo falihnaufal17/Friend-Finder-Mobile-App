@@ -65,10 +65,6 @@ export default class Login extends Component {
                 })
                 .catch(error => {
                     alert(error.message)
-                    this.setState({
-                        email: '',
-                        password: ''
-                    })
                 })
         }
     }

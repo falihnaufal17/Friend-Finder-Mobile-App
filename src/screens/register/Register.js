@@ -67,11 +67,6 @@ export default class Register extends Component {
                 })
                 .catch(error => {
                     alert(error.message)
-                    this.setState({
-                        fullname: '',
-                        email: '',
-                        password: ''
-                    })
 
                     this.props.navigation.navigate('Register')
                 })
