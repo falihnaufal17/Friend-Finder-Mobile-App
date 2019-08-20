@@ -15,7 +15,8 @@ export class Chat extends Component {
             messages: [],
             datauser: this.props.navigation.getParam('data'),
             text: '',
-            avatar: ''
+            avatar: '',
+            fullname: ''
         }
 
         storage.getItem('avatar', (err, result) => {
@@ -25,12 +26,20 @@ export class Chat extends Component {
                 })
             }
         })
+
+        storage.getItem('fullname', (err, result) => {
+            if (result) {
+                this.setState({
+                    fullname: result
+                })
+            }
+        })
     }
 
-    async componentWillMount() {
+    componentWillMount() {
         console.warn('uid1', Auth.currentUser.uid)
         console.warn('uid2', this.state.datauser.id)
-        await Database.ref('messages').child(Auth.currentUser.uid).child(this.state.datauser.id)
+        Database.ref('messages').child(Auth.currentUser.uid).child(this.state.datauser.id)
             .on('child_added', (value) => {
                 this.setState((prevState) => {
                     return {
@@ -55,7 +64,7 @@ export class Chat extends Component {
         // })
     }
 
-    onSend = async () => {
+    onSend = () => {
 
         if (this.state.text.length > 0) {
             let msgId = Database.ref('messages').child(Auth.currentUser.uid).child(this.state.datauser.id).push().key
@@ -63,9 +72,10 @@ export class Chat extends Component {
             let message = {
                 _id: msgId,
                 text: this.state.text,
-                createdat: firebase.database.ServerValue.TIMESTAMP,
+                createdAt: new Date(),
                 user: {
                     _id: Auth.currentUser.uid,
+                    fullname: this.state.fullname,
                     avatar: this.state.avatar
                 }
             }
@@ -131,9 +141,11 @@ export class Chat extends Component {
                     onSend={this.onSend}
                     user={{
                         _id: Auth.currentUser.uid,
+                        fullname: this.state.fullname,
                         avatar: this.state.avatar
                     }}
                     onInputTextChanged={(value) => this.setState({ text: value })}
+                    isLoadingEarlier={true}
                 />
             </>
         )
