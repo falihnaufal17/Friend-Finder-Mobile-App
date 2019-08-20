@@ -14,10 +14,11 @@ export default class Home extends Component {
             longitude: 0,
             users: []
         }
-        this.user()
+
 
     }
-    componentDidMount = async () => {
+    componentWillMount = async () => {
+        await this.user()
         await this.getCurrentPosition()
     }
 

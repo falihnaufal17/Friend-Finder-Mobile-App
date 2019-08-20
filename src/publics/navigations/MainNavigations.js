@@ -27,21 +27,20 @@ const AuthStack = createStackNavigator({
 })
 
 const StackNavigator = createStackNavigator({
-    Home: {
-        screen: Home,
+    ChatList: {
+        screen: ChatList,
         navigationOptions: {
             header: null
         }
     },
-
     UserList: {
         screen: UserList,
         navigationOptions: {
             header: null
         }
     },
-    ChatList: {
-        screen: ChatList,
+    Home: {
+        screen: Home,
         navigationOptions: {
             header: null
         }
