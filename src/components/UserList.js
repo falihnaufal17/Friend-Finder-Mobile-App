@@ -37,6 +37,7 @@ export class UserList extends Component {
                     </Left>
                     <Body>
                         <Text>{item.fullname}</Text>
+                        <Text note>{item.status}</Text>
                     </Body>
                 </ListItem>
             </List>
