@@ -1,42 +1,88 @@
 import React, { Component } from 'react'
-import { StyleSheet } from 'react-native'
+import { StyleSheet, AsyncStorage as storage } from 'react-native'
 import { GiftedChat } from 'react-native-gifted-chat'
-import { Header, Left, Icon, Body, Thumbnail, Right, Button, Title } from 'native-base';
+import { Header, Left, Icon, Body, Thumbnail, Right, Button, Title, Subtitle } from 'native-base';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import MarqueeText from 'react-native-marquee'
+import firebase from 'firebase'
+import { Database, Auth } from '../../publics/configs/db'
 
 export class Chat extends Component {
     constructor(props) {
         super(props)
 
         this.state = {
-            messages: []
+            messages: [],
+            datauser: this.props.navigation.getParam('data'),
+            text: '',
+            avatar: ''
         }
-    }
 
-    componentWillMount() {
-        this.setState({
-            messages: [
-                {
-                    _id: 1,
-                    text: 'Hello Developer',
-                    createdat: new Date(),
-                    user: {
-                        _id: 2,
-                        name: 'Ucing Gelo',
-                        avatar: 'https://placeimg.com/140/140/any'
-                    }
-                }
-            ]
+        storage.getItem('avatar', (err, result) => {
+            if (result) {
+                this.setState({
+                    avatar: result
+                })
+            }
         })
     }
 
-    onSend(messages = []) {
-        this.setState(previousState => ({
-            messages: GiftedChat.append(previousState.messages, messages)
-        }))
+    async componentWillMount() {
+        console.warn('uid1', Auth.currentUser.uid)
+        console.warn('uid2', this.state.datauser.id)
+        await Database.ref('messages').child(Auth.currentUser.uid).child(this.state.datauser.id)
+            .on('child_added', (value) => {
+                this.setState((prevState) => {
+                    return {
+                        messages: GiftedChat.append(prevState.messages, value.val())
+                    }
+                })
+            })
+
+        // this.setState({
+        //     messages: [
+        //         {
+        //             _id: 1,
+        //             text: 'Hello Developer',
+        //             createdat: new Date(),
+        //             user: {
+        //                 _id: 2,
+        //                 name: 'Ucing Gelo',
+        //                 avatar: 'https://placeimg.com/140/140/any'
+        //             }
+        //         }
+        //     ]
+        // })
+    }
+
+    onSend = async () => {
+
+        if (this.state.text.length > 0) {
+            let msgId = Database.ref('messages').child(Auth.currentUser.uid).child(this.state.datauser.id).push().key
+            let updates = {}
+            let message = {
+                _id: msgId,
+                text: this.state.text,
+                createdat: firebase.database.ServerValue.TIMESTAMP,
+                user: {
+                    _id: Auth.currentUser.uid,
+                    avatar: this.state.avatar
+                }
+            }
+
+            updates['messages/' + Auth.currentUser.uid + '/' + this.state.datauser.id + '/' + msgId] = message
+            updates['messages/' + this.state.datauser.id + '/' + Auth.currentUser.uid + '/' + msgId] = message
+
+            Database.ref().update(updates)
+            this.setState({ text: '' })
+        }
     }
 
     render() {
+        const { datauser } = this.state
+        console.warn(datauser)
+        // console.warn('Data user: ', datauser.id)
+        // console.warn('current id: ', Auth.currentUser.uid)
         return (
             <>
                 <Header>
@@ -49,10 +95,20 @@ export class Chat extends Component {
                         </Button>
                     </Left>
                     <Body>
-                        <Thumbnail source={{ uri: 'https://placeimg.com/140/140/any' }} rounded style={styles.avatar} />
+                        <Thumbnail source={{ uri: datauser.avatar }} rounded style={styles.avatar} />
                     </Body>
-                    <Body>
-                        <Title>Ucing Gelo</Title>
+                    <Body style={{ marginLeft: -60, width: 500 }}>
+                        <MarqueeText
+                            style={{ fontSize: 24 }}
+                            duration={3000}
+                            marqueeOnStart
+                            loop
+                            marqueeDelay={1000}
+                            marqueeResetDelay={1000}
+                        >
+                            <Title>{datauser.fullname}</Title>
+                        </MarqueeText>
+                        <Subtitle>{datauser.status}</Subtitle>
                     </Body>
                     <Right>
                         <Button
@@ -70,11 +126,14 @@ export class Chat extends Component {
                     </Right>
                 </Header>
                 <GiftedChat
+                    text={this.state.text}
                     messages={this.state.messages}
-                    onSend={messages => this.onSend(messages)}
+                    onSend={this.onSend}
                     user={{
-                        _id: 1
+                        _id: Auth.currentUser.uid,
+                        avatar: this.state.avatar
                     }}
+                    onInputTextChanged={(value) => this.setState({ text: value })}
                 />
             </>
         )

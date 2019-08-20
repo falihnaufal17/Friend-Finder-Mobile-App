@@ -61,7 +61,8 @@ export default class Register extends Component {
                         email: this.state.email,
                         avatar: 'https://res.cloudinary.com/dnqtceffv/image/upload/v1566043986/srhwjzljnfq79cg2glov.png',
                         latitude: this.state.latitude,
-                        longitude: this.state.longitude
+                        longitude: this.state.longitude,
+                        id: response.user.uid
                     })
                     this.props.navigation.navigate('Login')
                 })

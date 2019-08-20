@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import { FlatList, AsyncStorage as storage } from 'react-native'
 import { Text, Left, Body, List, ListItem, Thumbnail } from 'native-base';
 import { Database } from '../publics/configs/db'
-import firebase from 'firebase'
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { withNavigation } from 'react-navigation'
 
 export class UserList extends Component {
     constructor(props) {
@@ -34,17 +35,19 @@ export class UserList extends Component {
 
     _renderItem = ({ item }) => {
         return (
-            <List key={item.uid}>
-                <ListItem avatar>
-                    <Left>
-                        <Thumbnail source={{ uri: item.avatar }} />
-                    </Left>
-                    <Body>
-                        <Text>{item.fullname}</Text>
-                        <Text note>{item.status}</Text>
-                    </Body>
-                </ListItem>
-            </List>
+            <TouchableOpacity activeOpacity={0.7} onPress={() => this.props.navigation.navigate('Chat', { data: item })}>
+                <List key={item.id}>
+                    <ListItem avatar>
+                        <Left>
+                            <Thumbnail source={{ uri: item.avatar }} />
+                        </Left>
+                        <Body>
+                            <Text>{item.fullname}</Text>
+                            <Text note>{item.status}</Text>
+                        </Body>
+                    </ListItem>
+                </List>
+            </TouchableOpacity>
         )
     }
 
@@ -54,10 +57,11 @@ export class UserList extends Component {
             <FlatList
                 data={this.state.users}
                 renderItem={this._renderItem}
-                keyExtractor={item => item.uid}
+                keyExtractor={item => item.id}
+                showsVerticalScrollIndicator={false}
             />
         )
     }
 }
 
-export default UserList
+export default withNavigation(UserList)
