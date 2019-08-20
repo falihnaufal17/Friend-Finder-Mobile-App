@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { StatusBar, Text, View, StyleSheet, Image, TouchableOpacity, AsyncStorage as storage } from 'react-native'
 import { Item, Input, Icon, Button } from 'native-base'
 import { Database, Auth } from '../../publics/configs/db'
+import GetLocation from 'react-native-get-location'
 
 export default class Login extends Component {
     constructor(props) {
@@ -10,8 +11,31 @@ export default class Login extends Component {
         this.state = {
             users: [],
             email: '',
-            password: ''
+            password: '',
+            latitude: null,
+            longitude: null,
         }
+    }
+
+    componentDidMount = async () => {
+        await this.getCurrentPosition()
+    }
+
+    getCurrentPosition() {
+        GetLocation.getCurrentPosition({
+            enableHighAccuracy: true,
+            timeout: 15000,
+        })
+            .then(location => {
+                this.setState({
+                    latitude: location.latitude,
+                    longitude: location.longitude
+                })
+            })
+            .catch(error => {
+                const { code, message } = error;
+                console.warn(code, message);
+            })
     }
 
     _handleLogin = async () => {
@@ -35,7 +59,7 @@ export default class Login extends Component {
 
             await Auth.signInWithEmailAndPassword(email, password)
                 .then((response) => {
-                    Database.ref('/user/' + response.user.uid).update({ status: 'online' })
+                    Database.ref('/user/' + response.user.uid).update({ status: 'online', latitude: this.state.latitude, longitude: this.state.longitude })
                     storage.setItem('userid', response.user.uid)
                     this.props.navigation.navigate('AuthLoading')
                 })
