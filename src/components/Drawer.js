@@ -6,6 +6,35 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Database, Auth } from '../publics/configs/db'
 
 export class Drawer extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            email: '',
+            avatar: '',
+            fullname: '',
+        }
+    }
+
+    componentDidMount() {
+        AsyncStorage.getItem('email', (err, result) => {
+            if (result) {
+                this.setState({ email: result })
+            }
+        })
+
+        AsyncStorage.getItem('fullname', (err, result) => {
+            if (result) {
+                this.setState({ fullname: result })
+            }
+        })
+
+        AsyncStorage.getItem('avatar', (err, result) => {
+            if (result) {
+                this.setState({ avatar: result })
+            }
+        })
+    }
+
     _handleLogout = async () => {
         const userToken = await AsyncStorage.getItem('userid');
         console.log(userToken)
@@ -16,15 +45,20 @@ export class Drawer extends Component {
         }).catch(error => { alert(error.message) })
     }
     render() {
+        console.warn("datapribadidrawer", this.state.email)
+        console.warn("datapribadidrawer", this.state.fullname)
+        console.warn("datapribadidrawer", this.state.avatar)
+
+        const { email, fullname, avatar } = this.state
         return (
             <View style={styles.container}>
                 <View style={styles.background}>
                     <Image style={styles.imgBackground} source={require('../assets/images/8357196-portrait-of-five-friends-having-fun-at-karaoke-party.jpg')} resizeMode="stretch" />
-                    <Image source={{ uri: 'https://res.cloudinary.com/dnqtceffv/image/upload/v1565670582/qavsu8pjpmzl2qowt4rv.jpg' }} style={styles.avatar} />
+                    <Image source={{ uri: avatar }} style={styles.avatar} />
                 </View>
                 <View style={styles.viewProfileData}>
-                    <Text style={styles.txtFullname}>Falih Naufal</Text>
-                    <Text style={styles.txtEmail}>falihnaufal1700@gmail.com</Text>
+                    <Text style={styles.txtFullname}>{fullname}</Text>
+                    <Text style={styles.txtEmail}>{email}</Text>
                 </View>
                 <List>
                     <TouchableOpacity

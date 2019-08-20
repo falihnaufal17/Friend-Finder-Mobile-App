@@ -26,7 +26,10 @@ export default class Login extends Component {
                 if (data !== null) {
                     let users = Object.values(data)
 
-                    storage.setItem('userdata', users[0].email)
+                    storage.setItem('email', users[0].email)
+                    storage.setItem('fullname', users[0].fullname)
+                    storage.setItem('avatar', users[0].avatar)
+                    console.warn("datapribadi", users[0])
                 }
             })
 

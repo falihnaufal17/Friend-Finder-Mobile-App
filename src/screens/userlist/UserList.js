@@ -1,12 +1,9 @@
 import React, { Component } from 'react'
 import { StatusBar } from 'react-native'
-import { Text, Header, Left, Button, Right, Icon, Body, Title, List, ListItem, Thumbnail, Subtitle } from 'native-base';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { Header, Left, Button, Right, Icon, Body, Title, Subtitle } from 'native-base';
+import Lists from '../../components/UserList'
 
 class UserList extends Component {
-    constructor(props) {
-        super(props)
-    }
     render() {
         return (
             <>
@@ -27,17 +24,8 @@ class UserList extends Component {
                         </Button>
                     </Right>
                 </Header>
-                <List>
-                    <ListItem avatar>
-                        <Left>
-                            <Thumbnail source={{ uri: 'https://res.cloudinary.com/dnqtceffv/image/upload/v1565841345/w4erugmcy0csw2cvjmx7.jpg' }} />
-                        </Left>
-                        <Body>
-                            <Text>Nathalia Gabryel</Text>
-                            <Text note>Hi there i'm using friend finder!</Text>
-                        </Body>
-                    </ListItem>
-                </List>
+
+                <Lists />
             </>
         )
     }
