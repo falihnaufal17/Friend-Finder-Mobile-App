@@ -16,14 +16,28 @@ export default class Home extends Component {
             latitude: 0,
             longitude: 0,
             users: [],
+            userDetail: [],
             isModalVisible: false
         }
 
 
     }
 
-    modalControl = () => {
+    modalControl = email => {
         this.setState({ isModalVisible: !this.state.isModalVisible })
+        Database.ref('/user')
+            .orderByChild('email')
+            .equalTo(email)
+            .once('value', result => {
+                let data = Object.values(result.val());
+                this.setState({
+                    userDetail: data[0],
+                });
+            });
+    }
+
+    modalClose = async () => {
+        await this.setState({ isModalVisible: !this.state.isModalVisible })
     }
 
     componentWillMount = async () => {
@@ -74,6 +88,7 @@ export default class Home extends Component {
         console.warn("longitude", this.state.longitude)
         console.warn("latitude", this.state.latitude)
         console.warn("data", this.state.users)
+        console.warn("detail user: ", this.state.userDetail)
         return (
             <>
                 <StatusBar translucent={true} backgroundColor="transparent" barStyle="dark-content" />
@@ -95,7 +110,7 @@ export default class Home extends Component {
                             this.state.users.map((item) => {
                                 return (
                                     <Marker
-                                        onPress={this.modalControl}
+                                        onPress={() => this.modalControl(item.email)}
                                         coordinate={{
                                             latitude: item.latitude,
                                             longitude: item.longitude,
@@ -110,7 +125,7 @@ export default class Home extends Component {
                                                 source={{ uri: item.avatar }}
                                                 style={{ width: 26, height: 26, borderRadius: 100 / 2, position: 'absolute', bottom: 18, left: 3 }}
                                             />
-                                            <ModalProfile avatar={item.avatar} isVisible={this.state.isModalVisible} onClose={this.modalControl} />
+                                            <ModalProfile data={this.state.userDetail} isVisible={this.state.isModalVisible} onClose={this.modalClose} />
                                         </View>
 
                                     </Marker>
