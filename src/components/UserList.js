@@ -43,12 +43,12 @@ export class UserList extends Component {
                             <Thumbnail source={{ uri: item.avatar }} />
                         </Left>
                     </TouchableOpacity>
-                    <TouchableOpacity activeOpacity={0.7} onPress={() => this.props.navigation.navigate('Chat', { data: item })}>
-                        <Body>
+                    <Body>
+                        <TouchableOpacity activeOpacity={0.7} onPress={() => this.props.navigation.navigate('Chat', { data: item })}>
                             <Text>{item.fullname}</Text>
                             <Text note>{item.status}</Text>
-                        </Body>
-                    </TouchableOpacity>
+                        </TouchableOpacity>
+                    </Body>
                 </ListItem>
             </List>
         )
