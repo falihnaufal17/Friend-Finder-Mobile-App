@@ -1,12 +1,32 @@
 import React, { Component } from 'react'
-import { View, Image, StatusBar, StyleSheet } from 'react-native'
+import { View, Image, StatusBar, StyleSheet, AsyncStorage as storage } from 'react-native'
 import { Thumbnail, Button, Icon, Text } from 'native-base'
 
 export class Profile extends Component {
     constructor(props) {
         super(props)
+        this.state = {
+            fullname: '',
+            avatar: ''
+        }
+    }
+
+    componentDidMount() {
+        storage.getItem('fullname', (err, result) => {
+            if (result) {
+                this.setState({ fullname: result })
+            }
+        })
+
+        storage.getItem('avatar', (err, result) => {
+            if (result) {
+                this.setState({ avatar: result })
+            }
+        })
     }
     render() {
+        const { fullname, avatar } = this.state
+        console.warn('fullname: ', fullname)
         return (
             <View style={styles.root}>
                 <StatusBar translucent={true} backgroundColor="transparent" />
@@ -17,7 +37,10 @@ export class Profile extends Component {
                     <Text style={styles.txtFullname}>{this.props.navigation.getParam('fullname')}</Text>
                     <Text style={styles.txtEmail}>{this.props.navigation.getParam('email')}</Text>
                 </View>
-                <Button style={styles.btnEdit}>
+                <Button style={styles.btnEdit} onPress={() => this.props.navigation.navigate('EditProfile', {
+                    fullname,
+                    avatar
+                })}>
                     <Text>Edit Profile</Text><Icon name="ios-create" type="Ionicons" style={styles.iconStyle} />
                 </Button>
             </View>

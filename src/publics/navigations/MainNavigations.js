@@ -9,6 +9,7 @@ import Chat from '../../screens/chat/chat'
 import Profile from '../../screens/profiles/profile';
 import ProfileFriend from '../../screens/profiles/profileFriend'
 import AuthLoading from '../../components/AuthLoading'
+import EditProfile from '../../screens/editprofile/EditProfile';
 
 const AuthStack = createStackNavigator({
     Login: {
@@ -53,6 +54,12 @@ const StackNavigator = createStackNavigator({
     },
     Profile: {
         screen: Profile,
+        navigationOptions: {
+            header: null
+        }
+    },
+    EditProfile: {
+        screen: EditProfile,
         navigationOptions: {
             header: null
         }
