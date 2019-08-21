@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { StatusBar } from 'react-native'
-import { Text, Header, Left, Icon, Button, Right, Body, Title, Thumbnail, List, ListItem, Fab, Subtitle } from 'native-base'
+import { Text, Header, Left, Icon, Button, Right, Body, Title, Thumbnail, List, ListItem, Fab, Subtitle, View } from 'native-base'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export class chatlist extends Component {
@@ -19,7 +19,7 @@ export class chatlist extends Component {
                         <Subtitle>Chat List</Subtitle>
                     </Body>
                 </Header>
-                <List>
+                {/* <List>
                     <TouchableOpacity
                         activeOpacity={0.7}
                         onPress={() => this.props.navigation.navigate('Chat')}
@@ -37,7 +37,11 @@ export class chatlist extends Component {
                             </Right>
                         </ListItem>
                     </TouchableOpacity>
-                </List>
+                </List> */}
+                <View
+                    style={{ flex: 1, justifyContent: 'center', alignItems: 'center', margin: 0, }}>
+                    <Text note >Belum ada percakapan, mulai percakapan yuk!</Text>
+                </View>
                 <Fab
                     position="bottomRight"
                     onPress={() => this.props.navigation.navigate('UserList')}

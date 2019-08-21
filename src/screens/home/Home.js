@@ -1,9 +1,12 @@
 import React, { Component } from 'react'
-import { Text, View, StyleSheet, StatusBar, AsyncStorage as storage, Image } from 'react-native'
+import { Button, Text, View, StyleSheet, StatusBar, AsyncStorage as storage, Image } from 'react-native'
 import { Fab, Icon } from 'native-base'
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps'
 import GetLocation from 'react-native-get-location'
 import { Database } from '../../publics/configs/db'
+
+import ModalProfile from '../../components/ModalProfile'
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default class Home extends Component {
     constructor(props) {
@@ -12,11 +15,17 @@ export default class Home extends Component {
             mapRegion: null,
             latitude: 0,
             longitude: 0,
-            users: []
+            users: [],
+            isModalVisible: false
         }
 
 
     }
+
+    modalControl = () => {
+        this.setState({ isModalVisible: !this.state.isModalVisible })
+    }
+
     componentWillMount = async () => {
         await this.user()
         await this.getCurrentPosition()
@@ -86,18 +95,24 @@ export default class Home extends Component {
                             this.state.users.map((item) => {
                                 return (
                                     <Marker
-                                        draggable
+                                        onPress={this.modalControl}
                                         coordinate={{
                                             latitude: item.latitude,
                                             longitude: item.longitude,
                                         }}
                                         title={item.fullname}
                                         description={`${item.latitude} / ${item.longitude}`}
+                                        key={item.uid}
                                     >
-                                        <Image
-                                            source={{ uri: item.avatar }}
-                                            style={{ width: 40, height: 40, borderRadius: 100 / 2 }}
-                                        />
+                                        <View>
+                                            <Icon name='pin' type='Ionicons' style={{ color: 'steelblue', fontSize: 50 }} />
+                                            <Image
+                                                source={{ uri: item.avatar }}
+                                                style={{ width: 26, height: 26, borderRadius: 100 / 2, position: 'absolute', bottom: 18, left: 3 }}
+                                            />
+                                            <ModalProfile avatar={item.avatar} isVisible={this.state.isModalVisible} onClose={this.modalControl} />
+                                        </View>
+
                                     </Marker>
                                 )
                             })
