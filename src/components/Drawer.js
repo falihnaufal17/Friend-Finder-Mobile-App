@@ -12,10 +12,16 @@ export class Drawer extends Component {
             email: '',
             avatar: '',
             fullname: '',
+            userid: ''
         }
     }
 
     componentDidMount() {
+        AsyncStorage.getItem('userid', (err, result) => {
+            if (result) {
+                this.setState({ userid: result })
+            }
+        })
         AsyncStorage.getItem('email', (err, result) => {
             if (result) {
                 this.setState({ email: result })
@@ -49,7 +55,7 @@ export class Drawer extends Component {
         console.warn("datapribadidrawer", this.state.fullname)
         console.warn("datapribadidrawer", this.state.avatar)
 
-        const { email, fullname, avatar } = this.state
+        const { email, fullname, avatar, userid } = this.state
         return (
             <View style={styles.container}>
                 <View style={styles.background}>
@@ -71,7 +77,11 @@ export class Drawer extends Component {
                         </ListItem>
                     </TouchableOpacity>
                     <TouchableOpacity
-                        onPress={() => this.props.navigation.navigate('Profile')}
+                        onPress={() => this.props.navigation.navigate('Profile', {
+                            fullname: fullname,
+                            email: email,
+                            avatar: avatar
+                        })}
                     >
                         <ListItem>
                             <Left>

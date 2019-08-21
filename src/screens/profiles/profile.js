@@ -3,16 +3,19 @@ import { View, Image, StatusBar, StyleSheet } from 'react-native'
 import { Thumbnail, Button, Icon, Text } from 'native-base'
 
 export class Profile extends Component {
+    constructor(props) {
+        super(props)
+    }
     render() {
         return (
             <View style={styles.root}>
                 <StatusBar translucent={true} backgroundColor="transparent" />
                 <Image source={require('../../assets/images/friends_main.jpg')} resizeMode="stretch" style={styles.imgBackground} />
 
-                <Thumbnail source={{ uri: 'https://res.cloudinary.com/dnqtceffv/image/upload/v1565670582/qavsu8pjpmzl2qowt4rv.jpg' }} style={styles.avatar} />
+                <Thumbnail source={{ uri: this.props.navigation.getParam('avatar') }} style={styles.avatar} />
                 <View style={styles.profileData}>
-                    <Text style={styles.txtFullname}>Falih Naufal</Text>
-                    <Text style={styles.txtEmail}>falihnaufal1700@gmail.com</Text>
+                    <Text style={styles.txtFullname}>{this.props.navigation.getParam('fullname')}</Text>
+                    <Text style={styles.txtEmail}>{this.props.navigation.getParam('email')}</Text>
                 </View>
                 <Button style={styles.btnEdit}>
                     <Text>Edit Profile</Text><Icon name="ios-create" type="Ionicons" style={styles.iconStyle} />
