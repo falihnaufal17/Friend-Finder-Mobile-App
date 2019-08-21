@@ -3,16 +3,23 @@ import { View, Image, StatusBar, StyleSheet } from 'react-native'
 import { Thumbnail, Button, Icon, Text } from 'native-base'
 
 export class ProfileFriends extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            friendData: this.props.navigation.getParam('data')
+        }
+    }
     render() {
+        const { friendData } = this.state
         return (
             <View style={styles.root}>
                 <StatusBar translucent={true} backgroundColor="transparent" />
                 <Image source={require('../../assets/images/friends_main.jpg')} resizeMode="stretch" style={styles.imgBackground} />
 
-                <Thumbnail source={{ uri: 'https://res.cloudinary.com/dnqtceffv/image/upload/v1565841345/w4erugmcy0csw2cvjmx7.jpg' }} style={styles.avatar} />
+                <Thumbnail source={{ uri: friendData.avatar }} style={styles.avatar} />
                 <View style={styles.profileData}>
-                    <Text style={styles.txtFullname}>Nathalia Gabryel</Text>
-                    <Text style={styles.txtData}>nata@gmail.com</Text>
+                    <Text style={styles.txtFullname}>{friendData.fullname}</Text>
+                    <Text style={styles.txtData}>{friendData.email}</Text>
                     <Text style={styles.txtData}>Like: 87</Text>
                 </View>
                 <Button style={styles.btnLike}>

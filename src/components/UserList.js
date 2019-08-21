@@ -35,19 +35,22 @@ export class UserList extends Component {
 
     _renderItem = ({ item }) => {
         return (
-            <TouchableOpacity activeOpacity={0.7} onPress={() => this.props.navigation.navigate('Chat', { data: item })}>
-                <List key={item.id}>
-                    <ListItem avatar>
+
+            <List key={item.id}>
+                <ListItem avatar>
+                    <TouchableOpacity activeOpacity={0.7} onPress={() => this.props.navigation.navigate('ProfileFriend', { data: item })}>
                         <Left>
                             <Thumbnail source={{ uri: item.avatar }} />
                         </Left>
+                    </TouchableOpacity>
+                    <TouchableOpacity activeOpacity={0.7} onPress={() => this.props.navigation.navigate('Chat', { data: item })}>
                         <Body>
                             <Text>{item.fullname}</Text>
                             <Text note>{item.status}</Text>
                         </Body>
-                    </ListItem>
-                </List>
-            </TouchableOpacity>
+                    </TouchableOpacity>
+                </ListItem>
+            </List>
         )
     }
 
