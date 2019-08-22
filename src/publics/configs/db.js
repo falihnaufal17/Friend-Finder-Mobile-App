@@ -5,7 +5,7 @@ let config = {
     authDomain: "friend-finder-1566057916145.firebaseapp.com",
     databaseURL: "https://friend-finder-1566057916145.firebaseio.com/",
     projectId: "friend-finder-1566057916145",
-    storageBucket: "",
+    storageBucket: "gs://friend-finder-1566057916145.appspot.com",
     messagingSenderId: "964738643294",
     appId: "com.friendfinder"
 }

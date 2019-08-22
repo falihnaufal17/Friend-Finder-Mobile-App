@@ -3,6 +3,14 @@ import { View, StyleSheet, StatusBar } from 'react-native'
 import { Text, Item, Icon, Input, Header, Left, Body, Title, Label, Thumbnail, Button } from 'native-base';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import ImagePicker from 'react-native-image-picker'
+import RNFetchBlob from 'react-native-fetch-blob'
+import firebase from 'firebase'
+
+const Blob = RNFetchBlob.polyfill.Blob
+const fs = RNFetchBlob.fs
+window.XMLHttpRequest = RNFetchBlob.polyfill.XMLHttpRequest
+window.Blob = Blob
+
 export class EditProfile extends Component {
     constructor(props) {
         super(props)
@@ -25,6 +33,34 @@ export class EditProfile extends Component {
             }
         })
     }
+
+    uploadImage = (uri, avatar, mime = 'image/jpg') => {
+        return new Promise((resolve, reject) => {
+            const uploadUri = uri
+            let uploadBlob = null
+
+            const imageRef = firebase.storage().ref('posts').child(avatar)
+            fs.readFile(uploadUri, 'base64')
+                .then((data) => {
+                    return Blob.build(data, { type: `${mime};BASE64` })
+                })
+                .then((blob) => {
+                    uploadBlob = blob
+                    return imageRef.put(blob, { contentType: mime })
+                })
+                .then(() => {
+                    uploadBlob.close()
+                    return imageRef.getDownloadURL()
+                })
+                .then((url) => {
+                    resolve(url)
+                })
+                .catch((error) => {
+                    reject(error)
+                })
+        })
+    }
+
     render() {
         const { avatar, fullname, currentAvatar } = this.state
         return (
@@ -50,7 +86,7 @@ export class EditProfile extends Component {
                         <Label style={styles.icon}>Fullname</Label>
                         <Input onChangeText={fullname => this.setState({ fullname })} style={styles.textInput} value={fullname} />
                     </Item>
-                    <Button primary rounded style={{ width: 300 }}>
+                    <Button primary rounded style={{ width: 300 }} onPress={() => this.uploadImage(avatar.uri, avatar.fileName)}>
                         <Text style={{ textAlign: 'center', width: '100%' }}>Edit</Text>
                     </Button>
                 </View>
