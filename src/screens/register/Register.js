@@ -12,8 +12,8 @@ export default class Register extends Component {
             fullname: '',
             email: '',
             password: '',
-            latitude: null,
-            longitude: null,
+            latitude: 0,
+            longitude: 0,
         }
     }
 
