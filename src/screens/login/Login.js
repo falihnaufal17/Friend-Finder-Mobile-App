@@ -43,7 +43,7 @@ export default class Login extends Component {
         if (email === '' || password === '') {
             alert('Oops form ada yang kosong isi dengan lengkap yah')
         } else {
-            Database.ref('/user').orderByChild('email').equalTo(email).once('value', (result) => {
+            Database.ref('/user').orderByChild('email').equalTo(email).on('value', (result) => {
                 let data = result.val()
                 console.warn("datanya: ", data)
 

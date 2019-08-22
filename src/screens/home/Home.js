@@ -53,7 +53,7 @@ export default class Home extends Component {
         let uid = await storage.getItem('userid')
         // console.warn("long", this.state.longitude)
         // console.warn("lat", this.state.latitude)
-        Database.ref('/user').orderByChild('id').equalTo(uid).once('value', (result) => {
+        Database.ref('/user').orderByChild('id').equalTo(uid).on('child_added', (result) => {
             let data = result.val()
             // console.warn("datanya: ", data)
 
@@ -64,7 +64,7 @@ export default class Home extends Component {
     getCurrentPosition() {
         GetLocation.getCurrentPosition({
             enableHighAccuracy: true,
-            timeout: 10000,
+            timeout: 20000,
         })
             .then(location => {
                 console.warn(location.latitude);
@@ -89,7 +89,7 @@ export default class Home extends Component {
     }
 
     user = async () => {
-        Database.ref('/user').once('value', (result) => {
+        Database.ref('/user').on('value', (result) => {
             let data = result.val();
             if (data !== null) {
                 let users = Object.values(data);
