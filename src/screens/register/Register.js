@@ -64,7 +64,8 @@ export default class Register extends Component {
                         longitude: this.state.longitude,
                         id: response.user.uid
                     })
-                    this.props.navigation.navigate('Login')
+                    alert('Horeee registrasi berhasil')
+                    this.props.navigation.navigate('AuthLoading')
                 })
                 .catch(error => {
                     alert(error.message)
