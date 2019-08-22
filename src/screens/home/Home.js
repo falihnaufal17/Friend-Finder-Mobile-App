@@ -20,7 +20,7 @@ export default class Home extends Component {
             isModalVisible: false
         }
 
-
+        this.getCurrentPosition()
     }
 
     modalControl = email => {
@@ -42,13 +42,29 @@ export default class Home extends Component {
 
     componentWillMount = async () => {
         await this.user()
-        await this.getCurrentPosition()
+    }
+
+    componentDidMount() {
+        this.getCurrentPosition()
+        setInterval(() => this.updateLocation(), 10000);
+    }
+
+    updateLocation = async () => {
+        let uid = await storage.getItem('userid')
+        // console.warn("long", this.state.longitude)
+        // console.warn("lat", this.state.latitude)
+        Database.ref('/user').orderByChild('id').equalTo(uid).once('value', (result) => {
+            let data = result.val()
+            // console.warn("datanya: ", data)
+
+            Database.ref('/user/' + uid).update({ latitude: this.state.latitude, longitude: this.state.longitude })
+        })
     }
 
     getCurrentPosition() {
         GetLocation.getCurrentPosition({
             enableHighAccuracy: true,
-            timeout: 15000,
+            timeout: 10000,
         })
             .then(location => {
                 console.warn(location.latitude);
@@ -110,14 +126,13 @@ export default class Home extends Component {
                             this.state.users.map((item) => {
                                 return (
                                     <Marker
-                                        onPress={() => this.modalControl(item.email)}
                                         coordinate={{
                                             latitude: item.latitude,
                                             longitude: item.longitude,
                                         }}
                                         title={item.fullname}
                                         description={`${item.latitude} / ${item.longitude}`}
-                                        key={item.uid}
+                                        key={item.id}
                                     >
                                         <View>
                                             <Icon name='pin' type='Ionicons' style={{ color: 'steelblue', fontSize: 50 }} />
@@ -125,7 +140,7 @@ export default class Home extends Component {
                                                 source={{ uri: item.avatar }}
                                                 style={{ width: 26, height: 26, borderRadius: 100 / 2, position: 'absolute', bottom: 18, left: 3 }}
                                             />
-                                            <ModalProfile data={this.state.userDetail} isVisible={this.state.isModalVisible} onClose={this.modalClose} />
+                                            {/* <ModalProfile data={this.state.userDetail} isVisible={this.state.isModalVisible} onClose={this.modalClose} /> */}
                                         </View>
 
                                     </Marker>
