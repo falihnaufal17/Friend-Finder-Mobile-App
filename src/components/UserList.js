@@ -16,13 +16,13 @@ export class UserList extends Component {
 
     componentWillMount = async () => {
         let dbref = Database.ref('/user')
-        let email = await storage.getItem('email')
+        let userid = await storage.getItem('userid')
         dbref.on('child_added', (val) => {
             let person = val.val()
-            console.warn("person", person.email.toLowerCase())
-            console.warn("email", email)
-            if (person.email.toLowerCase() === email) {
-                email = person.email.toLowerCase()
+            console.warn("person", person.id)
+            console.warn("email", userid)
+            if (person.id === userid) {
+                userid = person.id
             } else {
                 this.setState((prevState) => {
                     return {
