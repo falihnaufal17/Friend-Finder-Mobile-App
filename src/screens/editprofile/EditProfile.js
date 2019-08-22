@@ -5,6 +5,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import ImagePicker from 'react-native-image-picker'
 import RNFetchBlob from 'react-native-fetch-blob'
 import firebase from 'firebase'
+import { Database, Auth } from '../../publics/configs/db'
 
 const Blob = RNFetchBlob.polyfill.Blob
 const fs = RNFetchBlob.fs
@@ -34,6 +35,10 @@ export class EditProfile extends Component {
         })
     }
 
+    componentDidMount = async () => {
+        await this.uploadImage()
+    }
+
     uploadImage = (uri, avatar, mime = 'image/jpg') => {
         return new Promise((resolve, reject) => {
             const uploadUri = uri
@@ -54,6 +59,8 @@ export class EditProfile extends Component {
                 })
                 .then((url) => {
                     resolve(url)
+                    Database.ref('user/' + Auth.currentUser.uid).update({ fullname: this.state.fullname, avatar: url })
+                    this.props.navigation.navigate('AuthLoading')
                 })
                 .catch((error) => {
                     reject(error)
@@ -63,6 +70,8 @@ export class EditProfile extends Component {
 
     render() {
         const { avatar, fullname, currentAvatar } = this.state
+        console.warn('fullname: ', fullname)
+        console.warn('current avatar: ', currentAvatar)
         return (
             <><StatusBar translucent={false} backgroundColor="transparent" />
                 <Header>
