@@ -42,7 +42,6 @@
 <div align="center">
     <img width="250" src="./src/assets/Screenshot_2019-08-30-18-26-39-603_com.friendfinder.png">
     <img width="250" src="./src/assets/Screenshot_2019-08-30-18-27-00-025_com.friendfinder.png">
-    <img width="250" src="./src/assets/Screenshot_2019-08-30-18-27-30-222_com.friendfinder.png">
     <img width="250" src="./src/assets/Screenshot_2019-08-30-18-28-07-476_com.friendfinder.png">
     <img width="250" src="./src/assets/Screenshot_2019-08-30-18-28-30-667_com.friendfinder.png">
     <img width="250" src="./src/assets/Screenshot_2019-08-30-18-27-33-649_com.friendfinder.png">
