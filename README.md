@@ -41,8 +41,6 @@
 ## Screenshots
 <div align="center">
     <img width="250" src="./src/assets/Screenshot_2019-08-30-18-26-39-603_com.friendfinder.png">
-    <img width="250" src="./src/assets/Screenshot_2019-08-30-22-13-52-251_com.friendfinder.png">
-    <img width="250" src="./src/assets/Screenshot_2019-08-30-22-13-57-942_com.friendfinder.png">
     <img width="250" src="./src/assets/Screenshot_2019-08-30-18-27-00-025_com.friendfinder.png">
     <img width="250" src="./src/assets/Screenshot_2019-08-30-18-27-30-222_com.friendfinder.png">
     <img width="250" src="./src/assets/Screenshot_2019-08-30-18-28-07-476_com.friendfinder.png">
@@ -61,7 +59,7 @@
   <table>
     <tr>
       <td align="center">
-        <a href="https://github.com/andreferi3">
+        <a href="https://github.com/falihnaufal17">
           <img width="100" src="./src/assets/IMG_20190526_225658_674.jpg" alt="Falih Naufal"><br/>
           <sub><b>Falih Naufal</b></sub>
         </a>
